@@ -6,26 +6,41 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Main extends ApplicationAdapter {
+	// Game Variables
 	SpriteBatch batch;
-	Texture img;
+	Zombie zombie;
+
+	// Control Variables
+
+	// Game Lists
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		zombie = new Zombie("zzz", 526, 300, 1);
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
+		update();
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(Resources.bg, 0, 0);
+		zombie.draw(batch);
 		batch.end();
+	}
+
+	void update(){
+		tap();
+		zombie.update();
+	}
+
+	void tap(){
+
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }

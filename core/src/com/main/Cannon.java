@@ -27,6 +27,7 @@ public class Cannon {
         if(counter > delay){
             if(!Main.zombies.isEmpty()) Main.bullets.add(new Bullet(type, x + w / 2, y + h / 2));
             counter = 0;
+            Resources.bullet_sound.play(0.20f);
         }
         sprite.setRotation(calcangle());
     }

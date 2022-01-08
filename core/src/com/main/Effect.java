@@ -4,31 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 
-public class Zombie {
-    int x, y, w, h, speed;
-    int hp, mhp;
-    String type;
+public class Effect {
+    int x, y, w, h;
     boolean active = true;
+    String type;
 
     //Animation Variables
-    int rows = 1, cols;
+    int rows = 1, cols = 4;
     Animation anim;
     TextureRegion[] frames;
     TextureRegion frame;
-    float frame_time = 0.2f; //1 seconds = 1.0f
+    float frame_time = 0.06f; //1 seconds = 1.0f
 
-    Zombie(String type, int x, int y, int speed){
+    Effect(String type, int x, int y){  //X and Y MUST be centered
         this.type = type;
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        hp = 5;
-        mhp = hp;
         cols = (Tables.values.get("columns_" + type) == null ? 1 : Tables.values.get("columns_" + type));
-        w = (Tables.zombies.get(type) == null ? Resources.zombie : Tables.zombies.get(type)).getWidth() / cols;
-        h = (Tables.zombies.get(type) == null ? Resources.zombie : Tables.zombies.get(type)).getHeight() / rows;
+        w = (Tables.resources.get("effect_" + type) == null ? Resources.click : Tables.resources.get("effect_" + type)).getWidth() / cols;
+        h = (Tables.resources.get("effect_" + type) == null ? Resources.click : Tables.resources.get("effect_" + type)).getHeight() / rows;
+        this.x = x - w / 2;
+        this.y = y - h / 2;
         init_animations();
     }
 
@@ -36,20 +31,12 @@ public class Zombie {
         frame_time += Gdx.graphics.getDeltaTime();
         frame = (TextureRegion)anim.getKeyFrame(frame_time, true);
         b.draw(frame, x, y);
-
-        //healthbar
-        b.draw(Resources.red_bar, x, y + h + 1, w, 5);
-        b.draw(Resources.green_bar, x, y + h + 1, hp * ((float)w / (float)mhp), 5);
-    }
-
-    void update(){
-        x -= speed;
-        active = x > -50 && hp > 0;
+        active = !anim.isAnimationFinished(frame_time);
     }
 
     void init_animations(){
         //split texture into individual cells
-        TextureRegion[][] sheet = TextureRegion.split((Tables.zombies.get(type) == null ? Resources.zombie : Tables.zombies.get(type)), w, h);
+        TextureRegion[][] sheet = TextureRegion.split((Tables.resources.get("effect_" + type) == null ? Resources.click : Tables.resources.get("effect_" + type)), w, h);
 
         //init number of frames to maximum number possible (all rows * all cols)
         frames = new TextureRegion[rows * cols];
@@ -63,6 +50,4 @@ public class Zombie {
         //initialize animation
         anim = new Animation(frame_time, frames);
     }
-
-    Rectangle hitbox() { return new Rectangle(x, y, w, h); }
 }

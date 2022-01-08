@@ -1,6 +1,7 @@
 package com.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Resources {
@@ -14,6 +15,10 @@ public class Resources {
     static Texture button_cannon_mounted = new Texture(Gdx.files.internal("mountedCannonIcon.png"));
     static Texture locked = new Texture(Gdx.files.internal("locked.png"));
     static Texture selected = new Texture(Gdx.files.internal("border.png"));
+    static Texture red_bar = new Texture(Gdx.files.internal("red_bar.png"));
+    static Texture green_bar = new Texture(Gdx.files.internal("green_bar.png"));
+    static Texture tooltip_bg = new Texture(Gdx.files.internal("ttbg.png"));
+    static Texture button_close = new Texture(Gdx.files.internal("x.png"));
 
     //Cannons
     static Texture cannon = new Texture(Gdx.files.internal("Cannon.png"));
@@ -31,6 +36,19 @@ public class Resources {
     static Texture zombie_riot = new Texture(Gdx.files.internal("riotzombieBIG.png"));
     static Texture zombie_fast = new Texture(Gdx.files.internal("Fastzombies.png"));
 
+    //Wizards
+    static Texture wizard_red = new Texture(Gdx.files.internal("wizard_red.png"));
+    static Texture wizard_blue = new Texture(Gdx.files.internal("wizard_blue.png"));
+    static Texture wizard_green = new Texture(Gdx.files.internal("wizard_green.png"));
+
     //Bullets
     static Texture bullet = new Texture(Gdx.files.internal("Bullet.png"));
+
+    //Effects
+    static Texture click = new Texture(Gdx.files.internal("click_effect.png"));
+    static Texture boom = new Texture(Gdx.files.internal("boom.png"));
+
+    //Sounds
+    static Sound bullet_sound = Gdx.audio.newSound(Gdx.files.internal("Bullet.mp3"));
+    static Sound bullet_pew_sound = Gdx.audio.newSound(Gdx.files.internal("FireBullet.mp3"));
 }

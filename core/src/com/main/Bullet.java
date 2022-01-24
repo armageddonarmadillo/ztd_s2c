@@ -27,8 +27,8 @@ public class Bullet {
     }
 
     float calcangle(){
-        float zx = Main.zombies.get(0).x + (float)Main.zombies.get(0).w / 2;
-        float zy = Main.zombies.get(0).y + (float)Main.zombies.get(0).h / 2;
+        float zx = Game.zombies.get(0).x + (float)Game.zombies.get(0).w / 2;
+        float zy = Game.zombies.get(0).y + (float)Game.zombies.get(0).h / 2;
         return (float)(Math.atan((y - zy) / (x - zx)) + (x >= zx ? Math.PI : 0));
     }
 
@@ -37,7 +37,7 @@ public class Bullet {
     }
 
     void checkcollisions(){
-        for (Zombie z : Main.zombies)
+        for (Zombie z : Game.zombies)
             if(z.hitbox().contains(hitbox())){
                 z.hp--;
                 active = false;

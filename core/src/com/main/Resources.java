@@ -2,6 +2,8 @@ package com.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Resources {
@@ -13,6 +15,10 @@ public class Resources {
     static Texture button_cannon_double = new Texture(Gdx.files.internal("doubleCannonIcon.png"));
     static Texture button_cannon_laser = new Texture(Gdx.files.internal("laserCannonIcon.png"));
     static Texture button_cannon_mounted = new Texture(Gdx.files.internal("mountedCannonIcon.png"));
+    static Texture button_wall = new Texture(Gdx.files.internal("WallIcon.png"));
+    static Texture play = new Texture(Gdx.files.internal("play.png"));
+    static Texture pause = new Texture(Gdx.files.internal("pause.png"));
+    static Texture wall = new Texture(Gdx.files.internal("Wall.png"));
     static Texture locked = new Texture(Gdx.files.internal("locked.png"));
     static Texture selected = new Texture(Gdx.files.internal("border.png"));
     static Texture red_bar = new Texture(Gdx.files.internal("red_bar.png"));
@@ -27,6 +33,7 @@ public class Resources {
     static Texture cannon_double = new Texture(Gdx.files.internal("doubleCannon.png"));
     static Texture cannon_laser = new Texture(Gdx.files.internal("laserCannon.png"));
     static Texture cannon_mounted = new Texture(Gdx.files.internal("mountedCannon.png"));
+    static Texture ghastly = new Texture(Gdx.files.internal("ghastly.png"));
 
     //Zombies
     static Texture test_zombie = new Texture(Gdx.files.internal("Zombie.png"));
@@ -47,8 +54,21 @@ public class Resources {
     //Effects
     static Texture click = new Texture(Gdx.files.internal("click_effect.png"));
     static Texture boom = new Texture(Gdx.files.internal("boom.png"));
+    static Texture splatter = new Texture(Gdx.files.internal("splatter.png"));
 
     //Sounds
     static Sound bullet_sound = Gdx.audio.newSound(Gdx.files.internal("Bullet.mp3"));
     static Sound bullet_pew_sound = Gdx.audio.newSound(Gdx.files.internal("FireBullet.mp3"));
+
+    //Methods
+    static Texture create(Color c){
+        Pixmap p = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        p.setColor(c);
+        p.fillRectangle(0, 0, 1, 1);
+        return new Texture(p);
+    }
+
+    static Color inverse(Color c){
+        return new Color(1f - c.r, 1f - c.g, 1f - c.b, 1f - c.a);
+    }
 }

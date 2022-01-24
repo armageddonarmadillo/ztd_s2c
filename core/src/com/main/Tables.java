@@ -18,21 +18,28 @@ public class Tables {
         values.put("columns_wizard_red", 2);
         values.put("columns_wizard_blue", 2);
         values.put("columns_wizard_green", 2);
+        values.put("columns_ghastly", 3);
+        values.put("columns_splatter", 6);
 
         resources.put("effect_click", Resources.click);
         resources.put("effect_boom", Resources.boom);
+        resources.put("effect_splatter", Resources.splatter);
 
         cannons.put("fire", Resources.cannon_fire);
         cannons.put("double", Resources.cannon_double);
         cannons.put("super", Resources.cannon_super);
         cannons.put("laser", Resources.cannon_laser);
         cannons.put("mounted", Resources.cannon_mounted);
+        cannons.put("ghastly", Resources.ghastly);
 
         buttons.put("fire", Resources.button_cannon_fire);
         buttons.put("double", Resources.button_cannon_double);
         buttons.put("super", Resources.button_cannon_super);
         buttons.put("laser", Resources.button_cannon_laser);
         buttons.put("mounted", Resources.button_cannon_mounted);
+        buttons.put("wall", Resources.button_wall);
+        buttons.put("play", Resources.play);
+        buttons.put("pause", Resources.pause);
 
         zombies.put("dif", Resources.zombie_dif);
         zombies.put("fast", Resources.zombie_fast);

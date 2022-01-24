@@ -26,7 +26,7 @@ public class Zombie {
         this.speed = speed;
         hp = 5;
         mhp = hp;
-        cols = (Tables.values.get("columns_" + type) == null ? 1 : Tables.values.get("columns_" + type));
+        cols = (Tables.values.get("columns_" + type) == null ? 4 : Tables.values.get("columns_" + type));
         w = (Tables.zombies.get(type) == null ? Resources.zombie : Tables.zombies.get(type)).getWidth() / cols;
         h = (Tables.zombies.get(type) == null ? Resources.zombie : Tables.zombies.get(type)).getHeight() / rows;
         init_animations();

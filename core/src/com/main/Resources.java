@@ -69,6 +69,6 @@ public class Resources {
     }
 
     static Color inverse(Color c){
-        return new Color(1f - c.r, 1f - c.g, 1f - c.b, 1f - c.a);
+        return new Color(1f - c.r, 1f - c.g, 1f - c.b, 1f);
     }
 }

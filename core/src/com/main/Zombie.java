@@ -19,12 +19,12 @@ public class Zombie {
     TextureRegion frame;
     float frame_time = 0.2f; //1 seconds = 1.0f
 
-    Zombie(String type, int x, int y, int speed){
+    Zombie(String type, int x, int y){
         this.type = type;
         this.x = x;
         this.y = y;
-        this.speed = speed;
-        hp = 5;
+        this.speed = (Tables.values.get("speed_" + type) == null ? 1 : Tables.values.get("speed_" + type));
+        hp = (Tables.values.get("health_" + type) == null ? 5 : Tables.values.get("health_" + type));
         mhp = hp;
         cols = (Tables.values.get("columns_" + type) == null ? 4 : Tables.values.get("columns_" + type));
         w = (Tables.zombies.get(type) == null ? Resources.zombie : Tables.zombies.get(type)).getWidth() / cols;
@@ -44,6 +44,9 @@ public class Zombie {
 
     void update(){
         x -= speed;
+        UI.money += hp > 0 ? 0 : 5;
+        UI.score += hp > 0 ? 0 : 1;
+        UI.life -= x > -50 ? 0 : Tables.values.get("damage_"+type) == null ? 1 : Tables.values.get("damage_"+type);
         active = x > -50 && hp > 0;
     }
 

@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Game {
+public class Game extends Scene{
     // Control Variables
     static boolean paused = false;
     static String current_type = "ghastly";
@@ -38,6 +38,7 @@ public class Game {
 
         //remove inactive objects
         housekeeping();
+        Main.lose = !(UI.life > 0);
     }
 
     void draw(SpriteBatch batch){
@@ -58,11 +59,22 @@ public class Game {
             if(b.gethitbox().contains(x, y)){
                 if(b.locked) {
                     if(b.t.hidden) { hidett(); b.t.hidden = false; }
-                    else { hidett(); b.locked = false; }
+                    else {
+                        hidett();
+                        if(UI.money >= (Tables.values.get("unlock_"+b.type) == null ? 100 : Tables.values.get("unlock_"+b.type))){
+                            UI.money -= (Tables.values.get("unlock_"+b.type) == null ? 100 : Tables.values.get("unlock_"+b.type));
+                            b.locked = false;
+                        }
+                    }
                 }
                 else {
                     if(b.type.equals("wall") || b.type.equals("mounted")){
-                        if(walls.size() < 5)walls.add(new Wall(walls.size() * Resources.wall.getWidth(), 0, b.type.equals("mounted")));
+                        if(walls.size() < 5){
+                            if(UI.money >= (Tables.values.get("place_"+b.type) == null ? 100 : Tables.values.get("place_"+b.type))) {
+                                UI.money -= (Tables.values.get("place_"+b.type) == null ? 100 : Tables.values.get("place_"+b.type));
+                                walls.add(new Wall(walls.size() * Resources.wall.getWidth(), 0, b.type.equals("mounted")));
+                            }
+                        }
                         return;
                     }
                     if(b.type.equals("pause") || b.type.equals("play")){
@@ -82,13 +94,23 @@ public class Game {
 
         //leave cannons last
         for(Cannon c : cannons) if(c.hitbox().contains(x, y)) return;
-        if(buildable(x, y)) cannons.add(new Cannon(current_type, x, y));
+        if(buildable(x, y)) {
+            if(UI.money >= (Tables.values.get("place_"+current_type) == null ? 5 : Tables.values.get("place_"+current_type))){
+                UI.money -= (Tables.values.get("place_"+current_type) == null ? 5 : Tables.values.get("place_"+current_type));
+                cannons.add(new Cannon(current_type, x, y));
+            }
+        }
     }
 
     void housekeeping(){
-        for(Zombie z : zombies) if(!z.active) { effects.add(new Effect("splatter", z.x + z.w / 2, z.y + z.h / 2)); zombies.remove(z); break; }
+        for(Zombie z : zombies) if(!z.active) {
+            effects.add(new Effect("splatter", z.x + z.w / 2, z.y + z.h / 2));
+            zombies.remove(z);
+            break;
+        }
         for(Effect e : effects) if(!e.active) { effects.remove(e); break; }
         for(Wall w : walls) if(!w.active) { walls.remove(w); break; }
+        for(Bullet b : bullets) if(!b.active) { bullets.remove(b); break; }
     }
 
     boolean anybutton(int x, int y) {
@@ -107,6 +129,20 @@ public class Game {
     void hidett() { for(Button b : buttons) b.t.hidden = true; }
 
     void setup(){
+        //Clear lists
+        buttons.clear();
+        walls.clear();
+        zombies.clear();
+        cannons.clear();
+        effects.clear();
+        bullets.clear();
+
+        //Init UI
+        UI.money = 25;
+        UI.life = 15;
+        UI.score = 0;
+        UI.wave = 0;
+
         Tables.init();
         current_type = "ghastly";
         buttons.add(new Button("cannon", 225 + buttons.size() * 75, 525));
@@ -126,22 +162,32 @@ public class Game {
         buttons.get(buttons.size() - 1).selected = false;
     }
 
+    ArrayList<String> ztypes = new ArrayList<String>();
     void spawn_zombies() {
         if(!zombies.isEmpty()) return;
-        UI.wave++;
-		/*
-		* String[] quick_types = { "zzz", "zzz", "zzz", "riot" };
-		for(int i = 0; i < UI.wave * 3; i++) {
-			zombies.add(new Zombie("wizard_red", 1055 + i * 90, r.nextInt(450), 5));
-		}*/
-
+        switch(UI.wave++){
+            case 3:
+                ztypes.add("dif");
+                break;
+            case 5:
+                ztypes.add("fast");
+                break;
+            case 10:
+                ztypes.add("speedy");
+                break;
+            case 15:
+                ztypes.add("riot");
+                break;
+            case 25:
+                ztypes.add("wizard_red");
+                ztypes.add("wizard_green");
+                ztypes.add("wizard_blue");
+                break;
+        }
         for(int i = 0; i < 2 * UI.wave; i++){
-            zombies.add(new Zombie("zzz", 1055 + i * 90, r.nextInt(450), 5));
+            zombies.add(new Zombie("zzz", 1055 + i * 90, r.nextInt(450)));
         }
-        if(UI.wave >= 10){
-            for(int i = 0; i < UI.wave; i++){
-                zombies.add(new Zombie("riot", 1055 + i * 90, r.nextInt(450), 5));
-            }
-        }
+        if(ztypes.size() > 0) for(int i = 0; i < (UI.wave / 2); i++)
+            zombies.add(new Zombie(ztypes.get(r.nextInt(ztypes.size())), 1055 + i * 200, r.nextInt(450)));
     }
 }

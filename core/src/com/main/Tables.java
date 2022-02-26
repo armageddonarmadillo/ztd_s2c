@@ -21,6 +21,35 @@ public class Tables {
         values.put("columns_ghastly", 3);
         values.put("columns_splatter", 6);
 
+        values.put("damage_speedy", 3);
+
+        values.put("place_fire", 15);
+        values.put("place_laser", 50);
+        values.put("place_double", 10);
+        values.put("place_mounted", 250);
+
+        values.put("unlock_fire", 300);
+        values.put("unlock_double", 150);
+        values.put("unlock_super", 250);
+        values.put("unlock_laser", 500);
+        values.put("unlock_mounted", 1000);
+
+        values.put("health_speedy", 2);
+        values.put("health_riot", 50);
+        values.put("health_dif", 8);
+        values.put("health_fast", 6);
+        values.put("health_wizard_red", 2022);
+        values.put("health_wizard_green", 2022);
+        values.put("health_wizard_blue", 2022);
+
+        values.put("speed_speedy", 10);
+        values.put("speed_fast", 5);
+        values.put("speed_dif", 3);
+        values.put("speed_riot", 2);
+        values.put("speed_wizard_red", 6);
+        values.put("speed_wizard_green", 6);
+        values.put("speed_wizard_blue", 6);
+
         resources.put("effect_click", Resources.click);
         resources.put("effect_boom", Resources.boom);
         resources.put("effect_splatter", Resources.splatter);

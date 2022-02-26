@@ -13,8 +13,10 @@ public class ToolTip {
     String type;
     BitmapFont font = new BitmapFont();
     GlyphLayout layout = new GlyphLayout();
+    Button b;
 
     ToolTip(String type, Button p){
+        b = p;
         w = 200;
         h = 100;
         x = (p.x + p.w / 2) - w / 2;
@@ -42,7 +44,7 @@ public class ToolTip {
         }
         font.setColor(Color.GOLD);
         font.getData().setScale(2.0f);
-        font.draw(batch, "Unlock: 5555", x + 12, y + 50);
+        font.draw(batch, "Unlock: "+(Tables.values.get("unlock_"+b.type) == null ? 100 : Tables.values.get("unlock_"+b.type)), x + 12, y + 50);
         font.getData().setScale(1.0f);
         font.setColor(Color.BLACK);
         font.draw(batch, "(tap again to unlock)", x + 37, y + 15);

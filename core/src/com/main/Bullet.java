@@ -27,8 +27,14 @@ public class Bullet {
     }
 
     float calcangle(){
-        float zx = Game.zombies.get(0).x + (float)Game.zombies.get(0).w / 2;
-        float zy = Game.zombies.get(0).y + (float)Game.zombies.get(0).h / 2;
+        Zombie closest = null;
+        for(Zombie z : Game.zombies){
+            if(closest == null) { closest = z; continue; }
+            float ch = (float)Math.sqrt((x - closest.x) * (x - closest.x) + (y - closest.y) * (y - closest.y));
+            float zh = (float)Math.sqrt((x - z.x) * (x - z.x) + (y - z.y) * (y - z.y));
+            if (zh < ch) closest = z;
+        }
+        float zx = closest.x + (float)closest.w / 2, zy = closest.y + (float)closest.h / 2;
         return (float)(Math.atan((y - zy) / (x - zx)) + (x >= zx ? Math.PI : 0));
     }
 
